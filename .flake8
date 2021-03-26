@@ -1,0 +1,11 @@
+# Refer to: https://github.com/facebookresearch/detectron2/blob/master/.flake8
+[flake8]
+ignore = W503, E203, E221, C901, C408, E741, C407, E741, C404
+# C404 dict comprehension ignored due to https://github.com/pytorch/pytorch/issues/41448
+max-line-length = 100
+max-complexity = 18
+select = B,C,E,F,W,T4,B9
+exclude = build
+per-file-ignores =
+  **/__init__.py:F401,F403,E402
+  **/configs/**.py:F401,E402

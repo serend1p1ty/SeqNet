@@ -1,0 +1,10 @@
+OUTPUT_DIR: "./exp_prw"
+INPUT:
+  DATASET: "PRW"
+  DATA_ROOT: "data/PRW"
+SOLVER:
+  MAX_EPOCHS: 18
+MODEL:
+  LOSS:
+    LUT_SIZE: 482
+    CQ_SIZE: 500

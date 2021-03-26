@@ -1,0 +1,14 @@
+black==20.8b1
+flake8==3.9.0
+isort==5.8.0
+numpy==1.16.4
+Pillow==6.1.0
+scikit-learn==0.23.1
+scipy==1.5.1
+tabulate==0.8.7
+torch==1.2.0
+torchvision==0.4.0
+tqdm==4.48.2
+yacs==0.1.8
+future==0.18.2
+tensorboard==2.4.1
