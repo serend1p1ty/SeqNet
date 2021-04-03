@@ -4,7 +4,6 @@
 
 This repository hosts the source code of our paper: [[AAAI 2021]Sequential End-to-end Network for Efficient Person Search](https://arxiv.org/abs/2103.10148). SeqNet achieves the state-of-the-art performance on two widely used benchmarks.
 
- <span id="anchor"></span>
 | Dataset   | mAP  | Top-1 | Model                                                        |
 | --------- | ---- | ----- | ------------------------------------------------------------ |
 | CUHK-SYSU | 94.8 | 95.7  | [model](https://drive.google.com/file/d/1wKhCHy7uTHx8zxNS62Y1236GNv5TzFzq/view?usp=sharing) |
@@ -26,7 +25,7 @@ $ROOT/data
 ├── CUHK-SYSU
 └── PRW
 ```
-2. Download our [pretrained model](#anchor) to anywhere you like, e.g., `$ROOT/exp_cuhk`
+2. Following the link in the above table, download our pretrained model to anywhere you like, e.g., `$ROOT/exp_cuhk`
 3. Evaluate its performance by specifing the paths of checkpoint and corresponding configuration file.
 ```
 python train.py --cfg $ROOT/exp_cuhk/config.yaml --eval --ckpt $ROOT/exp_cuhk/epoch_19.pth
