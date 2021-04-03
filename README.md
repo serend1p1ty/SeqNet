@@ -2,13 +2,16 @@
 <img src="doc/title.jpg" width="300" height="100" alt="图片名称"/>
 </div>
 
-This repository hosts the source code of our paper: [[AAAI 2021]Sequential End-to-end Network for Efficient Person Search](https://arxiv.org/abs/2103.10148). SeqNet achieves the state-of-the-art performance on two widely used benchmarks.
+This repository hosts the source code of our paper: [[AAAI 2021]Sequential End-to-end Network for Efficient Person Search](https://arxiv.org/abs/2103.10148). SeqNet achieves the state-of-the-art performance on two widely used benchmarks and runs at 11.5 FPS on a single GPU. You can find a brief Chinese introduction at [zhihu](https://zhuanlan.zhihu.com/p/358152127).
 
 | Dataset   | mAP  | Top-1 | Model                                                        |
 | --------- | ---- | ----- | ------------------------------------------------------------ |
 | CUHK-SYSU | 94.8 | 95.7  | [model](https://drive.google.com/file/d/1wKhCHy7uTHx8zxNS62Y1236GNv5TzFzq/view?usp=sharing) |
 | PRW       | 47.6 | 87.6  | [model](https://drive.google.com/file/d/1wKhCHy7uTHx8zxNS62Y1236GNv5TzFzq/view?usp=sharing) |
 
+**The network structure is simple and suitable as baseline**:
+
+![SeqNet](doc/net_arch.jpg)
 
 ## Installation
 
