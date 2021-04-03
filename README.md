@@ -4,24 +4,12 @@
 
 This repository hosts the source code of our paper: [[AAAI 2021]Sequential End-to-end Network for Efficient Person Search](https://arxiv.org/abs/2103.10148). SeqNet achieves the state-of-the-art performance on two widely used benchmarks.
 
-<table>
-   <tr align="center">
-      <td colspan="2">CUHK-SYSU</td>
-      <td colspan="2">PRW</td>
-   </tr>
-   <tr align="center">
-      <td>mAP</td>
-      <td>Top-1</td>
-      <td>mAP</td>
-      <td>Top-1</td>
-   </tr>
-   <tr align="center">
-      <th>94.8</td>
-      <th>95.7</td>
-      <th>47.6</td>
-      <th>87.6</td>
-   </tr>
-</table>
+ <span id="anchor"></span>
+| Dataset   | mAP  | Top-1 | Model                                                        |
+| --------- | ---- | ----- | ------------------------------------------------------------ |
+| CUHK-SYSU | 94.8 | 95.7  | [model](https://drive.google.com/file/d/1wKhCHy7uTHx8zxNS62Y1236GNv5TzFzq/view?usp=sharing) |
+| PRW       | 47.6 | 87.6  | [model](https://drive.google.com/file/d/1wKhCHy7uTHx8zxNS62Y1236GNv5TzFzq/view?usp=sharing) |
+
 
 ## Installation
 
@@ -38,7 +26,7 @@ $ROOT/data
 ├── CUHK-SYSU
 └── PRW
 ```
-2. Download our trained model to anywhere you like, e.g., `$ROOT/exp_cuhk`
+2. Download our [pretrained model](#anchor) to anywhere you like, e.g., `$ROOT/exp_cuhk`
 3. Evaluate its performance by specifing the paths of checkpoint and corresponding configuration file.
 ```
 python train.py --cfg $ROOT/exp_cuhk/config.yaml --eval --ckpt $ROOT/exp_cuhk/epoch_19.pth
