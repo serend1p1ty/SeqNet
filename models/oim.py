@@ -2,8 +2,6 @@ import torch
 import torch.nn.functional as F
 from torch import autograd, nn
 
-# from utils.distributed import tensor_gather
-
 
 class OIM(autograd.Function):
     @staticmethod
@@ -16,8 +14,6 @@ class OIM(autograd.Function):
     @staticmethod
     def backward(ctx, grad_outputs):
         inputs, targets, lut, cq, header, momentum = ctx.saved_tensors
-
-        # inputs, targets = tensor_gather((inputs, targets))
 
         grad_inputs = None
         if ctx.needs_input_grad[0]:

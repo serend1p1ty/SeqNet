@@ -1,6 +1,8 @@
 import torch
 from PIL import Image
 
+from utils.utils import create_small_table
+
 
 class BaseDataset:
     """
@@ -37,3 +39,35 @@ class BaseDataset:
 
     def __len__(self):
         return len(self.annotations)
+
+    def print_statistics(self):
+        """
+        Print dataset statistics.
+        """
+        num_imgs = len(self.annotations)
+        num_boxes = 0
+        pid_set = set()
+        for anno in self.annotations:
+            num_boxes += anno["boxes"].shape[0]
+            for pid in anno["pids"]:
+                pid_set.add(pid)
+        statistics = {
+            "dataset": self.name,
+            "split": self.split,
+            "num_images": num_imgs,
+            "num_boxes": num_boxes,
+        }
+        if len(pid_set) != 1:
+            pid_list = sorted(list(pid_set))
+            unlabeled_pid = pid_list[-1]
+            pid_list = pid_list[:-1]  # remove unlabeled pid
+            num_pids, min_pid, max_pid = len(pid_list), min(pid_list), max(pid_list)
+            statistics.update(
+                {
+                    "num_labeled_pids": num_pids,
+                    "min_labeled_pid": int(min_pid),
+                    "max_labeled_pid": int(max_pid),
+                    "unlabeled_pid": int(unlabeled_pid),
+                }
+            )
+        print(f"=> {self.name}-{self.split} loaded:\n" + create_small_table(statistics))

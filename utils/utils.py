@@ -410,8 +410,12 @@ def warmup_lr_scheduler(optimizer, warmup_iters, warmup_factor):
 
 
 def resume_from_ckpt(ckpt_path, model, optimizer=None, lr_scheduler=None):
-    ckpt = torch.load(ckpt_path)
-    model.load_state_dict(ckpt["model"], strict=False)
+    ckpt = torch.load(ckpt_path, map_location="cpu")
+    missing_keys, unexpected_keys = model.load_state_dict(ckpt["model"], strict=False)
+    if missing_keys:
+        print(f"missing keys: {missing_keys}")
+    if unexpected_keys:
+        print(f"unexpected keys: {unexpected_keys}")
     if optimizer is not None:
         optimizer.load_state_dict(ckpt["optimizer"])
     if lr_scheduler is not None:
@@ -422,6 +426,8 @@ def resume_from_ckpt(ckpt_path, model, optimizer=None, lr_scheduler=None):
 
 
 def set_random_seed(seed):
+    if seed < 0:
+        return
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
