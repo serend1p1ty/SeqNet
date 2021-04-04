@@ -167,9 +167,8 @@ class SeqRoIHeads(RoIHeads):
         self.reid_loss = OIMLoss(256, num_pids, num_cq_size, oim_momentum, oim_scalar)
         self.faster_rcnn_predictor = faster_rcnn_predictor
         self.reid_head = reid_head
-        self.postprocess_proposals = (
-            self.postprocess_detections
-        )  # rename the method inherited from parent class
+        # rename the method inherited from parent class
+        self.postprocess_proposals = self.postprocess_detections
 
     def forward(self, features, proposals, image_shapes, targets=None, query_img_as_gallery=False):
         """
@@ -194,30 +193,12 @@ class SeqRoIHeads(RoIHeads):
         if self.training:
             boxes = self.get_boxes(proposal_regs, proposals, image_shapes)
             boxes = [boxes_per_image.detach() for boxes_per_image in boxes]
+            boxes, _, box_pid_labels, box_reg_targets = self.select_training_samples(boxes, targets)
         else:
             # invoke the postprocess method inherited from parent class to process proposals
             boxes, scores, _ = self.postprocess_proposals(
                 proposal_cls_scores, proposal_regs, proposals, image_shapes
             )
-
-        if self.training:
-            boxes, _, box_pid_labels, box_reg_targets = self.select_training_samples(boxes, targets)
-
-        # no detection predicted by Faster R-CNN head in test phase
-        if boxes[0].shape[0] == 0:
-            boxes = torch.zeros(0, 4)
-            labels = torch.zeros(0)
-            scores = torch.zeros(0)
-            embeddings = torch.zeros(0, 256)
-            return [dict(boxes=boxes, labels=labels, scores=scores, embeddings=embeddings)], []
-
-        # --------------------- Baseline head -------------------- #
-        box_features = self.box_roi_pool(features, boxes, image_shapes)
-        box_features = self.reid_head(box_features)
-        box_regs = self.box_predictor(box_features["feat_res5"])
-        box_embeddings, box_cls_scores = self.embedding_head(box_features)
-        if box_cls_scores.dim() == 0:
-            box_cls_scores = box_cls_scores.unsqueeze(0)
 
         cws = True
         gt_det = None
@@ -232,6 +213,23 @@ class SeqRoIHeads(RoIHeads):
             gt_box_features = self.reid_head(gt_box_features)
             embeddings, _ = self.embedding_head(gt_box_features)
             gt_det = {"boxes": targets[0]["boxes"], "embeddings": embeddings}
+
+        # no detection predicted by Faster R-CNN head in test phase
+        if boxes[0].shape[0] == 0:
+            assert not self.training
+            boxes = gt_det["boxes"] if gt_det else torch.zeros(0, 4)
+            labels = torch.ones(1).type_as(boxes) if gt_det else torch.zeros(0)
+            scores = torch.ones(1).type_as(boxes) if gt_det else torch.zeros(0)
+            embeddings = gt_det["embeddings"] if gt_det else torch.zeros(0, 256)
+            return [dict(boxes=boxes, labels=labels, scores=scores, embeddings=embeddings)], []
+
+        # --------------------- Baseline head -------------------- #
+        box_features = self.box_roi_pool(features, boxes, image_shapes)
+        box_features = self.reid_head(box_features)
+        box_regs = self.box_predictor(box_features["feat_res5"])
+        box_embeddings, box_cls_scores = self.embedding_head(box_features)
+        if box_cls_scores.dim() == 0:
+            box_cls_scores = box_cls_scores.unsqueeze(0)
 
         result, losses = [], {}
         if self.training:
@@ -370,8 +368,8 @@ class SeqRoIHeads(RoIHeads):
             if gt_det is not None:
                 # include GT into the detection results
                 boxes = torch.cat((boxes, gt_det["boxes"]), dim=0)
-                labels = torch.cat((labels, torch.tensor([1.0]).cuda()), dim=0)
-                scores = torch.cat((scores, torch.tensor([1.0]).cuda()), dim=0)
+                labels = torch.cat((labels, torch.tensor([1.0]).to(device)), dim=0)
+                scores = torch.cat((scores, torch.tensor([1.0]).to(device)), dim=0)
                 embeddings = torch.cat((embeddings, gt_det["embeddings"]), dim=0)
 
             # non-maximum suppression, independently done per class

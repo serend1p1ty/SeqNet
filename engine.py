@@ -75,7 +75,7 @@ def evaluate_performance(
         use_gt (bool, optional): Whether to use GT as detection results to verify the upper
                                 bound of person search performance. Defaults to False.
         use_cache (bool, optional): Whether to use the cached features. Defaults to False.
-        use_cbgm (bool, optional): Whether to use Context Bipartite Graph Matching.
+        use_cbgm (bool, optional): Whether to use Context Bipartite Graph Matching algorithm.
                                 Defaults to False.
     """
     model.eval()
@@ -118,14 +118,11 @@ def evaluate_performance(
             # targets will be modified in the model, so deepcopy it
             outputs = model(images, deepcopy(targets), query_img_as_gallery=True)
 
-            # this check can be skipped for efficiency
-            exist_gt = False
+            # consistency check
             gt_box = targets[0]["boxes"].squeeze()
-            for box in outputs[0]["boxes"]:
-                if (gt_box - box).sum() <= 0.001:
-                    exist_gt = True
-                    break
-            assert exist_gt, "GT box must be included in the detections of query image"
+            assert (
+                gt_box - outputs[0]["boxes"][0]
+            ).sum() <= 0.001, "GT box must be the first one in the detected boxes of query image"
 
             for output in outputs:
                 box_w_scores = torch.cat([output["boxes"], output["scores"].unsqueeze(1)], dim=1)
