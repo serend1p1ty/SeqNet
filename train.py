@@ -15,6 +15,7 @@ from utils.group_by_aspect_ratio import GroupedBatchSampler, create_aspect_ratio
 from utils.transforms import build_transforms
 from utils.utils import (
     init_distributed_mode,
+    is_main_process,
     mkdir,
     resume_from_ckpt,
     save_on_master,
@@ -110,7 +111,7 @@ def main(args):
     if args.eval:
         assert args.ckpt, "--ckpt must be specified when --eval enabled"
         resume_from_ckpt(args.ckpt, model_without_ddp)
-        evaluate_performance(
+        return evaluate_performance(
             model,
             gallery_loader,
             query_loader,
@@ -119,7 +120,6 @@ def main(args):
             use_cache=cfg.EVAL_USE_CACHE,
             use_cbgm=cfg.EVAL_USE_CBGM,
         )
-        exit(0)
 
     params = [p for p in model.parameters() if p.requires_grad]
     optimizer = torch.optim.SGD(
@@ -146,7 +146,7 @@ def main(args):
         f.write(cfg.dump())
     print(f"Full config is saved to {path}")
     tfboard = None
-    if cfg.TF_BOARD:
+    if cfg.TF_BOARD and is_main_process():
         from torch.utils.tensorboard import SummaryWriter
 
         tf_log_path = osp.join(output_dir, "tf_log")

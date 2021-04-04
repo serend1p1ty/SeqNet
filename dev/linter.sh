@@ -27,5 +27,3 @@ if [ -x "$(command -v flake8-3)" ]; then
 else
   python3 -m flake8 .
 fi
-
-command -v arc > /dev/null && arc lint
