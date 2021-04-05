@@ -55,7 +55,7 @@ def main(args):
     device = torch.device(cfg.DEVICE)
     # different processes should be independent of each other,
     # so set different random seeds for them
-    set_random_seed(cfg.SEED + args.rank)
+    set_random_seed(cfg.SEED + args.rank if args.distributed else 0)
 
     print("Loading data")
     train_set, gallery_set, query_set = build_dataset(cfg.INPUT.DATASET, cfg.INPUT.DATA_ROOT)
@@ -105,6 +105,8 @@ def main(args):
 
     model_without_ddp = model
     if args.distributed:
+        # convert_sync_batchnorm() will generate cpu parameters that needed to be moved to gpu
+        model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model).to(device)
         model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
         model_without_ddp = model.module
 
@@ -140,6 +142,8 @@ def main(args):
 
     print("Creating output folder")
     output_dir = cfg.OUTPUT_DIR
+    # if is_main_process() and osp.exists(output_dir):
+    #     raise Exception(f"Output folder: {output_dir} is not empty!")
     mkdir(output_dir)
     path = osp.join(output_dir, "config.yaml")
     with open(path, "w") as f:
