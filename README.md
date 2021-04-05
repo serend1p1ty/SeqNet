@@ -9,7 +9,7 @@ Performance profile:
 | Dataset   | mAP  | Top-1 | Model                                                        |
 | --------- | ---- | ----- | ------------------------------------------------------------ |
 | CUHK-SYSU | 94.8 | 95.7  | [model](https://drive.google.com/file/d/1wKhCHy7uTHx8zxNS62Y1236GNv5TzFzq/view?usp=sharing) |
-| PRW       | 47.6 | 87.6  | [model](https://drive.google.com/file/d/1wKhCHy7uTHx8zxNS62Y1236GNv5TzFzq/view?usp=sharing) |
+| PRW       | 47.6 | 87.6  | [model](https://drive.google.com/file/d/1I9OI6-sfVyop_aLDIWaYwd7Z4hD34hwZ/view?usp=sharing) |
 
 The network structure is simple and suitable as baseline:
 
