@@ -2,6 +2,8 @@ import torch
 import torch.nn.functional as F
 from torch import autograd, nn
 
+from utils.utils import all_gather
+
 
 class OIM(autograd.Function):
     @staticmethod
@@ -49,20 +51,28 @@ class OIMLoss(nn.Module):
 
         self.header_cq = 0
 
-    def forward(self, inputs, roi_label):
+    def forward(self, inputs, roi_labels):
         # merge into one batch, background label = 0
-        targets = torch.cat(roi_label)
-        label = targets - 1  # background label = -1
+        targets = torch.cat(roi_labels)
+        labels = targets - 1  # background label = -1
 
-        inds = label >= 0
-        label = label[inds]
+        inds = labels >= 0
+        labels = labels[inds]
         inputs = inputs[inds.unsqueeze(1).expand_as(inputs)].view(-1, self.num_features)
 
-        projected = oim(inputs, label, self.lut, self.cq, self.header_cq, momentum=self.momentum)
+        # Gather the batch data in all GPUs to calculate OIM loss
+        # Otherwise, the lut and cq of each GPU will be different.
+        device = inputs.device
+        inputs = all_gather(inputs)
+        inputs = torch.cat([input.to(device) for input in inputs], dim=0)
+        labels = all_gather(labels)
+        labels = torch.cat([label.to(device) for label in labels], dim=0)
+
+        projected = oim(inputs, labels, self.lut, self.cq, self.header_cq, momentum=self.momentum)
         projected *= self.oim_scalar
 
         self.header_cq = (
-            self.header_cq + (label >= self.num_pids).long().sum().item()
+            self.header_cq + (labels >= self.num_pids).long().sum().item()
         ) % self.num_unlabeled
-        loss_oim = F.cross_entropy(projected, label, ignore_index=5554)
+        loss_oim = F.cross_entropy(projected, labels, ignore_index=5554)
         return loss_oim
