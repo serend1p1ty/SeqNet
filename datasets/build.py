@@ -24,19 +24,29 @@ def print_statistics(dataset):
         "num_images": num_imgs,
         "num_boxes": num_boxes,
     }
-    if len(pid_set) != 1:
+    if dataset.name != "CUHK-SYSU" or dataset.split != "query":
         pid_list = sorted(list(pid_set))
-        unlabeled_pid = pid_list[-1]
-        pid_list = pid_list[:-1]  # remove unlabeled pid
-        num_pids, min_pid, max_pid = len(pid_list), min(pid_list), max(pid_list)
-        statistics.update(
-            {
-                "num_labeled_pids": num_pids,
-                "min_labeled_pid": int(min_pid),
-                "max_labeled_pid": int(max_pid),
-                "unlabeled_pid": int(unlabeled_pid),
-            }
-        )
+        if dataset.split == "query":
+            num_pids, min_pid, max_pid = len(pid_list), min(pid_list), max(pid_list)
+            statistics.update(
+                {
+                    "num_labeled_pids": num_pids,
+                    "min_labeled_pid": int(min_pid),
+                    "max_labeled_pid": int(max_pid),
+                }
+            )
+        else:
+            unlabeled_pid = pid_list[-1]
+            pid_list = pid_list[:-1]  # remove unlabeled pid
+            num_pids, min_pid, max_pid = len(pid_list), min(pid_list), max(pid_list)
+            statistics.update(
+                {
+                    "num_labeled_pids": num_pids,
+                    "min_labeled_pid": int(min_pid),
+                    "max_labeled_pid": int(max_pid),
+                    "unlabeled_pid": int(unlabeled_pid),
+                }
+            )
     print(f"=> {dataset.name}-{dataset.split} loaded:\n" + create_small_table(statistics))
 
 
