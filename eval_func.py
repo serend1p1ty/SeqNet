@@ -123,7 +123,7 @@ def eval_search_cuhk(
     name_to_det_feat = {}
     for anno, det, feat in zip(annos, gallery_dets, gallery_feats):
         name = anno["img_name"]
-        if det != []:
+        if len(det) != 0:
             scores = det[:, 4].ravel()
             inds = np.where(scores >= det_thresh)[0]
             if len(inds) > 0:
