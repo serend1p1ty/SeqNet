@@ -100,6 +100,7 @@ class SeqNet(nn.Module):
         """
         query_img_as_gallery: Set to True to detect all people in the query image.
             Meanwhile, the gt box should be the first of the detected boxes.
+            This option serves CBGM.
         """
         original_image_sizes = [img.shape[-2:] for img in images]
         images, targets = self.transform(images, targets)
