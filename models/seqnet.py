@@ -97,6 +97,10 @@ class SeqNet(nn.Module):
         self.lw_box_reid = cfg.SOLVER.LW_BOX_REID
 
     def inference(self, images, targets=None, query_img_as_gallery=False):
+        """
+        query_img_as_gallery: Set to True to detect all people in the query image.
+            Meanwhile, the gt box should be the first of the detected boxes.
+        """
         original_image_sizes = [img.shape[-2:] for img in images]
         images, targets = self.transform(images, targets)
         features = self.backbone(images.tensors)

@@ -31,10 +31,9 @@ $ROOT/data
 └── PRW
 ```
 2. Following the link in the above table, download our pretrained model to anywhere you like, e.g., `$ROOT/exp_cuhk`
-3. Evaluate its performance by specifing the paths of checkpoint and corresponding configuration file.
-```
-python train.py --cfg $ROOT/exp_cuhk/config.yaml --eval --ckpt $ROOT/exp_cuhk/epoch_19.pth
-```
+3. Run an inference demo by specifing the paths of checkpoint and corresponding configuration file. `python train.py --cfg $ROOT/exp_cuhk/config.yaml --ckpt $ROOT/exp_cuhk/epoch_19.pth` You can checkout the result in `demo_imgs` directory.
+
+![demo.jpg](./demo_imgs/demo.jpg)
 
 ## Training
 
