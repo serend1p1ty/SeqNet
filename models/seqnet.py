@@ -156,6 +156,8 @@ class SeqNet(nn.Module):
 
 
 class SeqRoIHeads(RoIHeads):
+    # 这里是创新的主要点：
+        # 两个head
     def __init__(
         self,
         num_pids,
