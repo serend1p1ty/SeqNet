@@ -72,7 +72,7 @@ def main(args):
         # which equals to inner-products, as features are already L2-normed
         similarities = gallery_feats.mm(query_feat.view(-1, 1)).squeeze()
 
-        visualize_result(gallery_img_path, detections, similarities)
+        visualize_result(gallery_img_path, detections.cpu().numpy(), similarities)
 
 
 if __name__ == "__main__":
@@ -83,4 +83,5 @@ if __name__ == "__main__":
         "opts", nargs=argparse.REMAINDER, help="Modify config options using the command-line"
     )
     args = parser.parse_args()
-    main(args)
+    with torch.no_grad():
+        main(args)
