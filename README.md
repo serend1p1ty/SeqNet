@@ -27,7 +27,7 @@ Run `pip install -r requirements.txt` in the root directory of the project.
 
 Let's say `$ROOT` is the root directory.
 
-1. Download [CUHK-SYSU](https://drive.google.com/open?id=1z3LsFrJTUeEX3-XjSEJMOBrslxD2T5af) and [PRW](https://goo.gl/2SNesA) datasets, and unzip them to `$ROOT/data`
+1. Download [CUHK-SYSU](https://drive.google.com/open?id=1z3LsFrJTUeEX3-XjSEJMOBrslxD2T5af) and PRW ([google drive](https://goo.gl/2SNesA) or [baiduyun](https://pan.baidu.com/s/1U5YaSHuT6Cgl6xnjzh11Ow?pwd=q3q9)) datasets, and unzip them to `$ROOT/data`
 ```
 $ROOT/data
 ├── CUHK-SYSU
