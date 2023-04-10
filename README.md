@@ -2,8 +2,13 @@
 <img src="doc/title.jpg" width="300" height="100" alt="图片名称"/>
 </div>
 
+**Pure SeqNet**:
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/sequential-end-to-end-network-for-efficient/person-search-on-prw)](https://paperswithcode.com/sota/person-search-on-prw?p=sequential-end-to-end-network-for-efficient)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/sequential-end-to-end-network-for-efficient/person-search-on-cuhk-sysu)](https://paperswithcode.com/sota/person-search-on-cuhk-sysu?p=sequential-end-to-end-network-for-efficient)
+
+**SeqNet with SOLIDER**:
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/beyond-appearance-a-semantic-controllable/person-search-on-prw)](https://paperswithcode.com/sota/person-search-on-prw?p=beyond-appearance-a-semantic-controllable)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/beyond-appearance-a-semantic-controllable/person-search-on-cuhk-sysu)](https://paperswithcode.com/sota/person-search-on-cuhk-sysu?p=beyond-appearance-a-semantic-controllable)
 
 This repository hosts the source code of our paper: [[AAAI 2021]Sequential End-to-end Network for Efficient Person Search](https://arxiv.org/abs/2103.10148). SeqNet achieves the **state-of-the-art** performance on two widely used benchmarks and runs at **11.5 FPS** on a single GPU. You can find a brief Chinese introduction at [zhihu](https://zhuanlan.zhihu.com/p/358152127).
 
@@ -27,8 +32,7 @@ The network structure is simple and suitable as baseline:
 
 ## Updates
 
-[**2023/04/10: [SOLIDER](https://github.com/tinyvision/SOLIDER) makes SeqNet better!**]: SOLIDER is a Semantic Controllable Self-Supervised Learning Framework to learn general human representations from massive unlabeled human images which can benefit downstream human-centric tasks to the maximum extent. With SOLIDER backbone, SeqNet achieves better results. [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/beyond-appearance-a-semantic-controllable/person-search-on-cuhk-sysu)](https://paperswithcode.com/sota/person-search-on-cuhk-sysu?p=beyond-appearance-a-semantic-controllable)
-[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/beyond-appearance-a-semantic-controllable/person-search-on-prw)](https://paperswithcode.com/sota/person-search-on-prw?p=beyond-appearance-a-semantic-controllable)
+[**2023/04/10: [SOLIDER](https://github.com/tinyvision/SOLIDER) makes SeqNet better!**]: SOLIDER is a Semantic Controllable Self-Supervised Learning Framework to learn general human representations from massive unlabeled human images which can benefit downstream human-centric tasks to the maximum extent. With SOLIDER backbone, SeqNet achieves better results. Please refer to their repo for more details. Nice work!
 
 ## Installation
 
