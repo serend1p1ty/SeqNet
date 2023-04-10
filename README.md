@@ -7,16 +7,28 @@
 
 This repository hosts the source code of our paper: [[AAAI 2021]Sequential End-to-end Network for Efficient Person Search](https://arxiv.org/abs/2103.10148). SeqNet achieves the **state-of-the-art** performance on two widely used benchmarks and runs at **11.5 FPS** on a single GPU. You can find a brief Chinese introduction at [zhihu](https://zhuanlan.zhihu.com/p/358152127).
 
-Performance profile:
+SeqNet performance:
 
 | Dataset   | mAP  | Top-1 | Model                                                        |
 | --------- | ---- | ----- | ------------------------------------------------------------ |
 | CUHK-SYSU | 94.8 | 95.7  | [model](https://drive.google.com/file/d/1wKhCHy7uTHx8zxNS62Y1236GNv5TzFzq/view?usp=sharing) |
 | PRW       | 47.6 | 87.6  | [model](https://drive.google.com/file/d/1I9OI6-sfVyop_aLDIWaYwd7Z4hD34hwZ/view?usp=sharing) |
 
+SeqNet with SOLIDER performance:
+
+| Dataset   | mAP  | Top-1 | Model                                                        |
+| --------- | ---- | ----- | ------------------------------------------------------------ |
+| CUHK-SYSU | 95.5 | 95.8  | - |
+| PRW       | 59.8 | 86.7  | - |
+
 The network structure is simple and suitable as baseline:
 
 ![SeqNet](doc/net_arch.jpg)
+
+## Updates
+
+[**2023/04/10: [SOLIDER](https://github.com/tinyvision/SOLIDER) makes SeqNet better!**]: SOLIDER is a Semantic Controllable Self-Supervised Learning Framework to learn general human representations from massive unlabeled human images which can benefit downstream human-centric tasks to the maximum extent. With SOLIDER backbone, SeqNet achieves better results. [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/beyond-appearance-a-semantic-controllable/person-search-on-cuhk-sysu)](https://paperswithcode.com/sota/person-search-on-cuhk-sysu?p=beyond-appearance-a-semantic-controllable)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/beyond-appearance-a-semantic-controllable/person-search-on-prw)](https://paperswithcode.com/sota/person-search-on-prw?p=beyond-appearance-a-semantic-controllable)
 
 ## Installation
 
