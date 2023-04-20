@@ -63,7 +63,7 @@ python train.py --cfg configs/cuhk_sysu.yaml
 ```
 
 **Note**:
-* If you are unable to reproduce our results, please check the PyTorch version. Related issues: https://github.com/serend1p1ty/SeqNet/issues/32, https://github.com/serend1p1ty/SeqNet/issues/31, https://github.com/serend1p1ty/SeqNet/issues/29, https://github.com/serend1p1ty/SeqNet/issues/26
+* If you are unable to reproduce our results, please check the PyTorch version. Related issues: https://github.com/serend1p1ty/SeqNet/issues/26 https://github.com/serend1p1ty/SeqNet/issues/29 https://github.com/serend1p1ty/SeqNet/issues/31 https://github.com/serend1p1ty/SeqNet/issues/32
 * At present, our script only supports single GPU training, but it may support distributed training in the future. By default, the batch size and the learning rate during training are set to 5 and 0.003 respectively, which requires about 28GB of GPU memory. If your GPU cannot provide the required memory, try smaller batch size and learning rate (*performance may degrade*). Specifically, your setting should follow the [*Linear Scaling Rule*](https://arxiv.org/abs/1706.02677): When the minibatch size is multiplied by k, multiply the learning rate by k. For example:
 
 ```
