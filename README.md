@@ -70,6 +70,8 @@ python train.py --cfg configs/cuhk_sysu.yaml
 python train.py --cfg configs/cuhk_sysu.yaml INPUT.BATCH_SIZE_TRAIN 2 SOLVER.BASE_LR 0.0012
 ```
 
+* If your GPU memory is not enough, you can also try strategies such as mixed precision training (FP16), cumulative gradient, and gradient checkpoint. I have tried FP16, which can achieve the same accuracy while saving half of the GPU memory. Unfortunately, I lost this part of the code about FP16. Related PR is welcomed, I can provide some code implementation suggestions.
+
 **Tip**: If the training process stops unexpectedly, you can resume from the specified checkpoint.
 
 ```
